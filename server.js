@@ -1,22 +1,69 @@
 const express = require('express');
-const mongoose = require('mongoose');
+const mysql = require('mysql2');
 const cors = require('cors');
-require('dotenv').config();
 
 const app = express();
 
-// middleware
 app.use(cors());
-app.use(express.json({ limit: "10kb" }));
+app.use(express.json());
 
-// routes
-app.use('/api/students', require('./routes/studentRoutes'));
+const db = mysql.createConnection({
+  host: 'localhost',
+  user: 'root',
+  password: 'root',
+  database: 'quizforge'
+});
 
-// DB connect
-mongoose.connect(process.env.MONGO_URI)
-.then(() => console.log("MongoDB Connected"))
-.catch(err => console.log(err));
+db.connect(err => {
+  if (err) throw err;
+  console.log('MySQL Connected');
+});
 
-// start server
-const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+app.post('/signup', (req, res) => {
+  const { name, email, password } = req.body;
+
+  db.query(
+    'INSERT INTO users (name,email,password) VALUES (?,?,?)',
+    [name, email, password],
+    (err) => {
+      if (err) {
+        res.json({ success: false });
+      } else {
+        res.json({ success: true });
+      }
+    }
+  );
+});
+
+app.post('/login', (req, res) => {
+  const { email, password } = req.body;
+
+  db.query(
+    'SELECT * FROM users WHERE email=? AND password=?',
+    [email, password],
+    (err, result) => {
+      if (result.length > 0) {
+        res.json({ success: true });
+      } else {
+        res.json({ success: false });
+      }
+    }
+  );
+});
+
+app.post('/save-result', (req, res) => {
+  const { email, quiz_name, score } = req.body;
+
+  db.query(
+    'INSERT INTO results (email,quiz_name,score) VALUES (?,?,?)',
+    [email, quiz_name, score],
+    () => {
+      res.json({ success: true });
+    }
+  );
+});
+
+app.listen(5000, () => {
+  console.log('Server running on port 5000');
+})
+
