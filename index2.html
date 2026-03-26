@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>QuizForge | Online Quiz System</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<div id="app">
+
+  <section id="auth-screen" class="screen active">
+    <div class="auth-container">
+
+      <header class="brand">
+        <span>◈ QuizForge</span>
+      </header>
+
+      <div class="auth-tabs">
+        <button id="login-tab" class="active">Sign In</button>
+        <button id="signup-tab">Register</button>
+      </div>
+
+      <div id="login-panel" class="auth-panel active">
+        <h1>Welcome Back</h1>
+
+        <form id="login-form">
+          <div class="field-group">
+            <label>Email</label>
+            <input type="email" id="login-email" placeholder="you@example.com" required>
+          </div>
+
+          <div class="field-group">
+            <label>Password</label>
+            <input type="password" id="login-password" required>
+          </div>
+
+          <button type="submit" class="btn-primary full">Sign In</button>
+
+          <p class="demo-hint">
+            Demo: <strong>demo@quiz.com</strong> / <strong>Demo@1234</strong>
+          </p>
+        </form>
+      </div>
+
+      <div id="signup-panel" class="auth-panel">
+        <h1>Create Account</h1>
+
+        <form id="signup-form">
+          <div class="field-group">
+            <label>Full Name</label>
+            <input type="text" id="signup-name" required>
+          </div>
+
+          <div class="field-group">
+            <label>Email</label>
+            <input type="email" id="signup-email" required>
+          </div>
+
+          <div class="field-group">
+            <label>Password</label>
+            <input type="password" id="signup-password" required>
+          </div>
+
+          <div class="field-group">
+            <label>Confirm Password</label>
+            <input type="password" id="signup-confirm" required>
+          </div>
+
+          <button type="submit" class="btn-primary full">Create Account</button>
+        </form>
+      </div>
+
+    </div>
+  </section>
+
+  <section id="lobby-screen" class="screen">
+    <nav class="lobby-nav">
+      <span>◈ QuizForge</span>
+      <button id="logout-btn">Logout</button>
+    </nav>
+
+    <main class="lobby-main">
+      <h1>Select Quiz</h1>
+      <div id="quiz-grid" class="quiz-grid"></div>
+    </main>
+  </section>
+
+  <section id="quiz-screen" class="screen">
+    <header class="quiz-header">
+      <h1 id="quiz-title"></h1>
+      <div id="timer">00:00</div>
+    </header>
+
+    <main class="quiz-body">
+      <div class="question-card">
+        <p id="question-number"></p>
+        <h2 id="question-text"></h2>
+        <div id="options-container"></div>
+      </div>
+
+      <button id="next-btn" class="btn-primary">Next</button>
+    </main>
+  </section>
+
+  <section id="result-screen" class="screen">
+    <div class="result-card">
+      <h1 id="result-title"></h1>
+      <div id="result-percent"></div>
+
+      <button id="retry-btn">Retry</button>
+      <button id="back-btn">Back</button>
+    </div>
+  </section>
+
+</div>
+
+<script src="quiz.js"></script>
+</body>
+</html>
